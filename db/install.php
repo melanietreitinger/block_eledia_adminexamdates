@@ -110,4 +110,6 @@ function xmldb_block_eledia_adminexamdates_install() {
     $DB->execute("INSERT INTO {eledia_adminexamdates_itm} VALUES (16, 1, 0, 'Zweitarchivierung und –signierung bei Änderungen', 15, 0, 0, 100, 0, 'black', 0, 0, 0, NULL, '', 0, 'Zweitarchivierung und –signierung bei Änderungen {Datum}')", null);
     $DB->execute("INSERT INTO {eledia_adminexamdates_itm} VALUES (17, 1, 0, 'Notenschlüssel bereitgestellt', 16, 0, 0, 100, 0, 'black', 0, 0, 0, NULL, '', 0, 'Notenschlüssel bereitgestellt {Datum}')", null);
     $DB->execute("INSERT INTO {eledia_adminexamdates_itm} VALUES (18, 1, 0, 'Klausur abgeschlossen', 17, 0, 0, 101, 0, ' 990', 0, 0, 0, NULL, '', 0, 'Klausur abgeschlossen {Datum}')", null);
+
+    return true;
 }
