@@ -92,8 +92,6 @@ foreach ($rooms as $room) {
 
 $roomscount = $hasconfirmexamdatescap ? count($roomcategories) : count($roomswithcapacity);
 
-list($in_sql, $in_params) = $DB->get_in_or_equal($specialroomitems);
-
 $sql = "SELECT ar.id, a.id AS examdateid, a.id AS examdateid, a.examname, ab.blocktimestart,ab.blockduration, ar.examroom, ar.blockid, a.numberstudents, a.examiner,a.responsibleperson, a.contactperson, a.confirmed, a.userid
                     FROM {eledia_adminexamdates} a
                     LEFT JOIN {eledia_adminexamdates_blocks} ab ON ab.examdateid = a.id
@@ -102,20 +100,23 @@ $sql = "SELECT ar.id, a.id AS examdateid, a.id AS examdateid, a.examname, ab.blo
                     AND ar.blockid IS NOT NULL 
                     ORDER BY ab.blocktimestart, ar.examroom DESC";
 
-$sqlspecial = "SELECT ar.id, ar.blockid,ab.blocktimestart, ab.blockduration, ar.examroom, ar.roomannotationtext 
-                    FROM {eledia_adminexamdates_blocks} ab 
-                    LEFT JOIN {eledia_adminexamdates_rooms} ar ON ar.blockid = ab.id
-                    WHERE ar.examroom $in_sql
-                    AND ab.examdateid IS NULL
-                    AND ar.blockid IS NOT NULL
-                    ORDER BY ab.blocktimestart, ar.examroom DESC";
-//WHERE ag.blocktimestart > ? AND ag.blocktimestart < ?";
-
-$dates = $DB->get_records_sql($sql, $in_params);
-
-if ($hasconfirmexamdatescap) {
-    $specialroomdates = $DB->get_records_sql($sqlspecial, $in_params);
+if (!empty($specialroomitems)) {
+    list($in_sql, $in_params) = $DB->get_in_or_equal($specialroomitems);
+    $sqlspecial = "SELECT ar.id, ar.blockid,ab.blocktimestart, ab.blockduration, ar.examroom, ar.roomannotationtext 
+                        FROM {eledia_adminexamdates_blocks} ab 
+                        LEFT JOIN {eledia_adminexamdates_rooms} ar ON ar.blockid = ab.id
+                        WHERE ar.examroom $in_sql
+                        AND ab.examdateid IS NULL
+                        AND ar.blockid IS NOT NULL
+                        ORDER BY ab.blocktimestart, ar.examroom DESC";
+    //WHERE ag.blocktimestart > ? AND ag.blocktimestart < ?";
+    
+    if ($hasconfirmexamdatescap) {
+        $specialroomdates = $DB->get_records_sql($sqlspecial, $in_params);
+    }
 }
+
+$dates = $DB->get_records_sql($sql);
 
 $holidaylines = preg_split('/\r\n|\r|\n/', get_config('block_eledia_adminexamdates', 'holidays'));
 $holidays = [];
@@ -222,7 +223,7 @@ foreach ($dates as $date) {
         }
     }
 }
-if ($hasconfirmexamdatescap) {
+if ($hasconfirmexamdatescap && !empty($specialroomdates)) {
     foreach ($specialroomdates as $specialroomdate) {
         if (!empty($specialroomdate->blocktimestart) &&
                 !empty($specialroomdate->blockduration) && !empty($specialroomdate->blockid)) {
