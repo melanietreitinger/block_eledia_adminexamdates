@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'eLeDia E-Klausur Termin-Verwaltung';
-$string['privacy:metadata'] = 'Das eLeDia E-Klausur Termin-Verwaltung Block Plugin speichert keine persönlichen Daten.';
+$string['pluginname'] = 'eLeDia E-Prüfung Termin-Verwaltung';
+$string['privacy:metadata'] = 'Das eLeDia E-Prüfung Termin-Verwaltung Block Plugin speichert keine persönlichen Daten.';
 $string['examdaterequest'] = 'Prüfungstermin-Anfrage';
 $string['time'] = 'Termin';
 $string['newexamdate'] = 'Neuer Prüfungstermin';
@@ -35,21 +35,21 @@ $string['examdatesunconfirmed'] = 'Prüfungsterminplanung';
 $string['examdate_header'] = 'Prüfungsterminplanung';
 $string['examroom'] = 'Prüfungsraum';
 $string['select_examroom'] = 'Prüfungsraum wählen';
-$string['examtimestart'] = 'Prüfungszeitraum {$a}&nbsp;Uhr';
-$string['examduration'] = 'Klausur-Schreibzeit (Minuten)';
+$string['examtimestart'] = 'Prüfungszeitraum {$a} Uhr';
+$string['examduration'] = 'Prüfungszeit (Minuten)';
 $string['booktimestart'] = 'Buchungsbeginn';
 $string['bookduration'] = 'Buchungsdauer (Minuten)';
 $string['select_specialroom'] = 'Sonderraum wählen';
-$string['examname'] = 'Klausurbezeichnung';
-$string['examname_help'] = 'Bitte halten Sie sich bei der Bezeichnung der Klausur an folgende Nomenklatur: „JJJJMMTT Fachbereich Prüfer:in/Dozent:in Freier Text“. Beispiel: „20230731 FB08 Mustermann Physiologie Grundlagen“.';
+$string['examname'] = 'Prüfungsbezeichnung';
+$string['examname_help'] = 'Bitte halten Sie sich bei der Bezeichnung der Prüfung an folgende Nomenklatur: „JJJJMMTT Fachbereich Prüfer:in/Dozent:in Freier Text“. Beispiel: „20230731 FB08 Mustermann Physiologie Grundlagen“.';
 $string['examdaterequester'] = 'Beantragung';
 $string['timecreated'] = 'Erstellt';
 $string['confirmed'] = 'Bestätigt';
 $string['editexamdate'] = 'Bearbeiten';
 $string['cancelexamdate'] = 'Stornieren';
 $string['confirmexamdate'] = 'Bestätigen';
-$string['confirmexamdatemsg'] = 'Wollen Sie die den Prüfungstermin bestätigen für: \'{$a->name}\'?';
-$string['cancelexamdatemsg'] = 'Wollen Sie die den Prüfungstermin stornieren für: \'{$a->name}\'?';
+$string['confirmexamdatemsg'] = 'Wollen Sie die den Prüfungstermin bestätigen für "{$a->name}"?';
+$string['cancelexamdatemsg'] = 'Wollen Sie die den Prüfungstermin stornieren für "{$a->name}"?';
 $string['configure_description'] = 'Hier können Sie die Prüfungstermin-Verwaltung konfigurieren.';
 $string['number_students'] ='Erwartete Anzahl der Teilnehmenden';
 $string['department'] ='Fachbereich';
@@ -57,15 +57,15 @@ $string['examiner'] ='Dozent:in/ Prüfer:in';
 $string['examiner_help'] = 'Wählen Sie eine oder mehrere Dozent:innen aus der Liste aus. Die Eingabe von Dozent:innennamen, die nicht in der Liste aufgeführt sind, werden nicht übernommen.';
 $string['contactperson'] ='Ansprechpartner:in';
 $string['contactpersonemail'] ='E-Mail des/der Ansprechpartners/Ansprechpartnerin';
-$string['responsibleperson'] ='SCL Verantwortliche:r';
+$string['responsibleperson'] ='Verantwortliche:r im E-Assessment-Center';
 $string['examrooms_default'] = 'PR1|Prüfungsraum 1|100|#E91E63
 PR2|Prüfungsraum 2|100|#3F51B5
 AB|Administrationsbüro|0|#009688
 ER|Endabnahmeraum|0|#6D4C41';
 $string['config_examrooms'] = 'Jede Zeile konfiguriert einen eigenen Prüfungsraum. In jeder Zeile steht zunächst eine eindeutige Raum-ID (z.B. \'PR1\'), dann der Name des Raumes (z.B. \'Prüfungsraum 1\') sowie die Raumkapazität, also die maximale Teilnehmerzahl (z.B. \'100\') und die angezeigte Raum-Farbe (z.B. \'#3F51B5\'), getrennt durch jeweils einen senkrechten Strich.';
 $string['examrooms'] ='Konfiguration der Prüfungsräume';
-$string['config_responsiblepersons'] = 'Liste der User-IDs der SCL Verantwortlichen, getrennt jeweils durch ein Komma. (Beispiel: \'2,4,5,12\')';
-$string['responsiblepersons'] ='Konfiguration der SCL Verantwortlichen';
+$string['config_responsiblepersons'] = 'Liste der User-IDs der E-Assessment-Center Verantwortlichen, getrennt jeweils durch ein Komma. (Beispiel: \'2,4,5,12\')';
+$string['responsiblepersons'] ='Konfiguration der E-Assessment-Center Verantwortlichen';
 $string['summersemester'] ='Sommersemester';
 $string['wintersemester'] ='Wintersemester';
 $string['select_semester'] ='Semester';
@@ -81,13 +81,13 @@ $string['setting_envcategoryidnumber'] = 'Kursbereichs-ID der Prüfungsumgebung'
 $string['config_envcategoryidnumber'] = 'Die Fachbereiche liegen als Unterkategorien in der "Prüfungsumgebung" des Prüfungssystems. Diese Kurskategorie-ID sollte in der Kategorie "Prüfungsumgebung" gesetzt sein.';
 $string['setting_archivecategoryidnumber'] = 'Kursbereichs-ID des Prüfungsarchivs';
 $string['config_archivecategoryidnumber'] = 'Die stornierten Prüfungskurse werden in einer Kurskategorie des Prüfungssystems archiviert. Diese Kurskategorie-ID sollte in der entsprechenden Archiv-Kurskategorie gesetzt werden.';
-$string['setting_examcoursetemplateidnumber'] = 'Kurs-ID der Klausur-Kursvorlage';
-$string['config_examcoursetemplateidnumber'] = 'Diese Kurs-ID sollte in der Klausur-Kursvorlage des Prüfungssystems gesetzt sein.';
+$string['setting_examcoursetemplateidnumber'] = 'Kurs-ID der Prüfungskurs-Vorlage';
+$string['config_examcoursetemplateidnumber'] = 'Diese Kurs-ID sollte in der Prüfungskurs-Vorlage des Prüfungssystems gesetzt sein.';
 $string['calendar_btn'] = 'Kalender - Prüfungstermine - Buchung';
 $string['unconfirmed_btn'] = 'Unbestätigte Prüfungstermine';
 $string['confirmed_btn'] = 'Bestätigte Prüfungstermine';
-$string['setting_startexam'] = 'Frühester E-Klausur Beginn';
-$string['setting_endexam'] = 'Spätestens E-Klausur Ende';
+$string['setting_startexam'] = 'Frühester Beginn der Prüfung';
+$string['setting_endexam'] = 'Spätestes Ende der Prüfung';
 $string['setting_startcalendar'] = 'Anzeige Kalender-Beginn (nur volle Stunden)';
 $string['setting_endcalendar'] = 'Anzeige Kalender-Ende (nur volle Stunden)';
 $string['setting_breakbetweenblockdates'] = 'Pause zwischen zwei Blockterminen (in Minuten)';
@@ -98,7 +98,7 @@ $string['newsingleexamdate'] = 'Neuer Teiltermin';
 $string['examdateslist_btn'] = 'Prüfungstermin-Liste';
 $string['tablehead_month'] = 'Monat';
 $string['tablehead_date'] = 'Datum';
-$string['tablehead_examname'] = 'Bezeichnung Klausur';
+$string['tablehead_examname'] = 'Bezeichnung Prüfung';
 $string['tablehead_examiner'] = 'Prüfer:in/Dozent:in';
 $string['tablehead_contactperson'] = 'Ansprechpartner:in';
 $string['tablehead_examroom'] = 'Prüfungsraum';
@@ -107,7 +107,7 @@ $string['tablehead_supervisor2'] = 'Betreuer:in 2';
 $string['tablehead_candidates'] = 'Prüflinge';
 $string['tablehead_status'] = 'Status';
 $string['tablehead_blockid'] = 'Teiltermin ID';
-$string['tablehead_examid'] = 'Klausur ID';
+$string['tablehead_examid'] = 'Prüfungs-ID';
 $string['tablehead_links'] = '';
 $string['dt_lenghtmenu'] = 'Anzeigen von _MENU_ Prüfungsterminen pro Seite';
 $string['dt_zerorecords'] = 'Nichts gefunden - Entschuldigung';
@@ -127,10 +127,10 @@ $string['dt_previous'] = 'Zurück';
 $string['dt_sortascending'] = ': aktivieren, um die Spalte aufsteigend zu sortieren';
 $string['dt_sortdescending'] = ': aktivieren um die Spalte absteigend zu sortieren';
 $string['block_timestart'] = 'Prüfungsbeginn (Blocktermin)';
-$string['block_duration'] = 'Klausur-Schreibzeit (Minuten)';
+$string['block_duration'] = 'Prüfungs-Schreibzeit (Minuten)';
 $string['room_number_students'] = 'Anzahl der Teilnehmenden (Raum)';
 $string['room_supervisor'] = 'Betreuer:in (Raum)';
-$string['room_supervision'] = 'Klausuraufsicht (Raum)';
+$string['room_supervision'] = 'Prüfungsaufsicht (Raum)';
 $string['partialdate'] = 'Teiltermin';
 $string['examdateedit'] = 'Prüfungstermin bearbeiten';
 $string['status_confirmed'] = 'Bestätigt';
@@ -142,12 +142,12 @@ $string['changerequest_header'] = 'Änderungsanfrage an das Prüfungsteam';
 $string['changerequesttext'] = 'Eingabe der Änderungsanfrage';
 $string['send_email'] ='Sende E-Mail';
 $string['examdaterooms'] ='Prüfungsräume';
-$string['eledia_adminexamdates:addinstance'] = 'Neuen eLeDia E-Klausur Termin-Verwaltungs-Block hinzufügen';
-$string['eledia_adminexamdates:confirmexamdates'] = 'Bestätigen der E-Klausur Termine im eLeDia E-Klausur Termin-Verwaltungs-Block';
+$string['eledia_adminexamdates:addinstance'] = 'Neuen eLeDia E-Prüfung Termin-Verwaltungs-Block hinzufügen';
+$string['eledia_adminexamdates:confirmexamdates'] = 'Bestätigen der E-Prüfungs Termine im eLeDia E-Prüfung Termin-Verwaltungs-Block';
 $string['delete'] ='Löschen';
-$string['confirm_delete_singleexamdate_msg'] = 'Wollen Sie in der Klausur: \'{$a->name}\' den {$a->index} Teiltermin löschen?';
-$string['error_examdate_already_taken']  = 'Dieser Termin ist bereits vergeben. Bitte suchen Sie nach einem anderen  Termin!';
-$string['error_startexamtime']  = 'Der frühestmögliche Klausurtermin ist {$a->start} Uhr. Der spätestmögliche Zeitpunkt für die Beendigung einer Klausur ist {$a->end} Uhr.';
+$string['confirm_delete_singleexamdate_msg'] = 'Wollen Sie in der Prüfung "{$a->name}" den {$a->index}. Teiltermin löschen?';
+$string['error_examdate_already_taken']  = 'Dieser Termin ist bereits vergeben. Bitte suchen Sie nach einem anderen Termin!';
+$string['error_startexamtime']  = 'Der frühestmögliche Prüfungstermin ist {$a->start} Uhr. Der spätestmögliche Zeitpunkt für die Beendigung einer Prüfung ist {$a->end} Uhr.';
 $string['autocomplete_placeholder']  = 'Suche oder Eingabe mit Eingabetaste ';
 $string['error_email'] = 'Bitte geben Sie eine gültige E-Mail-Adresse ein!';
 $string['pleasechoose'] = 'Bitte auswählen ...';
@@ -157,10 +157,10 @@ $string['error_wrong_userid'] = 'Bitte Namen und keine Zahlen eingeben!';
 $string['config_select_calendar_month'] = 'Monat';
 $string['config_select_calendar_year'] = 'Jahr';
 $string['calendar_date'] = 'Auswahl eines Datums';
-$string['confirm_save_singleexamdate_msg'] = 'Der {$a->index} Teiltermin der Klausur: \'{$a->name}\' wurde gespeichert.';
+$string['confirm_save_singleexamdate_msg'] = 'Der {$a->index} Teiltermin der Prüfung "{$a->name}" wurde gespeichert.';
 $string['error_wrong_email'] = 'Bitte geben Sie eine korrekte E-Mail-Adresse mit der Eingabetaste ein - oder suchen Sie in der Auswahl!';
 $string['error_wrong_userid_email'] = 'Bitte eine korrekte E-Mail-Adresse und keine Zahlen eingeben!';
-$string['examconfirm_email_subject'] = 'Bestätigung des Prüfungstermins: {$a->name}';
+$string['examconfirm_email_subject'] = 'Bestätigung des Prüfungstermins für "{$a->name}"';
 $string['examconfirm_email_body'] = 'Der Prüfungstermin wurde bestätigt für: 
 
 {$a->name}, 
@@ -169,7 +169,7 @@ $string['examconfirm_email_body'] = 'Der Prüfungstermin wurde bestätigt für:
 {$a->url} 
 
 ';
-$string['request_email_subject'] = 'Anfrage Prüfungstermin: {$a->name}';
+$string['request_email_subject'] = 'Anfrage Prüfungstermin für "{$a->name}"';
 $string['request_email_body'] = 'Der Prüfungstermin wurde angefragt für: 
 
 {$a->name} 
@@ -181,11 +181,11 @@ Anmerkungen:
 {$a->url}
 
 ';
-$string['examcancel_email_subject'] = 'Absage des Prüfungstermins für: {$a->name}';
+$string['examcancel_email_subject'] = 'Absage des Prüfungstermins für "{$a->name}"';
 $string['examcancel_email_body'] = 'Der Prüfungstermin wurde abgesagt für: 
 
 {$a->name}, {$a->date}.';
-$string['changerequest_email_subject'] = 'Änderungsanfrage an das Prüfungsteam: {$a->name}';
+$string['changerequest_email_subject'] = 'Änderungsanfrage an das Prüfungsteam für "{$a->name}"';
 $string['changerequest_email_body'] = 'Änderungsanfrage an das Prüfungsteam
 
 Prüfung: 
@@ -228,7 +228,7 @@ $string['numberstudents'] = 'Anzahl Teilnehmende';
 $string['examnumber'] = 'Anzahl Prüfungen';
 $string['blocknumber'] = 'Anzahl Teiltermine';
 $string['hour'] = ' Uhr';
-$string['error_pastexamtime'] = 'Das Klausurtermin darf nicht in der Vergangenheit liegen.';
+$string['error_pastexamtime'] = 'Der Prüfungstermin darf nicht in der Vergangenheit liegen.';
 $string['setting_bordercolor_unconfirmed_dates'] = 'Rahmenfarbe 1';
 $string['config_bordercolor_unconfirmed_dates'] = 'Rahmenfarbe für unbestätigte Termine in der Kalenderansicht der Prüfungstermin-Admins.';
 $string['setting_bordercolor_unavailable_dates'] = 'Rahmenfarbe 2';

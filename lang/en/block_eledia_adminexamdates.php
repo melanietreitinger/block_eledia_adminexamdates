@@ -48,8 +48,8 @@ $string['confirmed'] = 'Confirmed';
 $string['editexamdate'] = 'Edit';
 $string['cancelexamdate'] = 'Cancel';
 $string['confirmexamdate'] = 'Confirm';
-$string['confirmexamdatemsg'] = 'Do you want to confirm the exam date for: \'{name}\'?';
-$string['cancelexamdatemsg'] = 'Do you want to cancel the exam date for: \'{name}\'?';
+$string['confirmexamdatemsg'] = 'Do you want to confirm the exam date for "{$a->name}"?';
+$string['cancelexamdatemsg'] = 'Do you want to cancel the exam date for "{$a->name}"?';
 $string['configure_description'] = 'Here you can configure the exam schedule management.';
 $string['number_students'] ='Expected number of students';
 $string['department'] ='Department';
@@ -57,15 +57,15 @@ $string['examiner'] ='Examiner';
 $string['examiner_help'] = 'Select one or more instructors from the list. The input of lecturers names that are not in the list will not be accepted.';
 $string['contactperson'] ='Contact person';
 $string['contactpersonemail'] ='Contact person\'s email';
-$string['responsibleperson'] ='SCL responsible person';
+$string['responsibleperson'] ='E-Assessment-Center responsible person';
 $string['examrooms_default'] = 'PR1|Prüfungsraum 1|100|#AF7B84
 PR2|Prüfungsraum 2|100|#3F51B5
 AB|Administrationsbüro|0|#FA9F37
 ER|Endabnahmeraum|0|#987D71';
 $string['config_examrooms'] = 'Each line configures its own room. In each line there is first a unique room ID (e.g. \'PR1\'), followed by the name of the room (e.g. \'Examination room 1\'), as well as the room capacity, i.e. the maximum number of participants (e.g. \'100\') and the displayed room color (e.g. \'#3F51B5\'), separated by a vertical line.';
 $string['examrooms'] ='Configuration of the examination rooms';
-$string['config_responsiblepersons'] = 'List of the user IDs of those responsible for the SCL, each separated by a comma. (e.g. \'2,4,5,12\')';
-$string['responsiblepersons'] ='Configuration of SCL responsible persons';
+$string['config_responsiblepersons'] = 'List of the user IDs of those responsible for the E-Assessment-Center, each separated by a comma. (e.g. \'2,4,5,12\')';
+$string['responsiblepersons'] ='Configuration of E-Assessment-Center responsible persons';
 $string['summersemester'] ='Sommersemester';
 $string['wintersemester'] ='Wintersemester';
 $string['select_semester'] ='Semester';
@@ -145,7 +145,7 @@ $string['examdaterooms'] ='Exam rooms';
 $string['eledia_adminexamdates:addinstance'] = 'Add a new eLeDia e-exam dates administration block';
 $string['eledia_adminexamdates:confirmexamdates'] = 'Confirm the e-exam dates in the eLeDia e-exam dates administration block';
 $string['delete'] ='Delete';
-$string['confirm_delete_singleexamdate_msg'] = 'Do you really want to delete for the exam: \'{$a->name}\' the {$a->index}. single exam date?';
+$string['confirm_delete_singleexamdate_msg'] = 'Do you really want to delete for the exam "{$a->name}" the {$a->index}. single exam date?';
 $string['error_examdate_already_taken']  = 'This exam date is already taken. Please look for another date!';
 $string['error_startexamtime'] = 'The earliest possible exam date is {$a->start}. The latest possible time for the completion of an exam is {$a->end}.';
 $string['autocomplete_placeholder']  = 'Search or enter with the Enter key ';
@@ -157,10 +157,10 @@ $string['error_wrong_userid'] = 'Please enter names and no numbers!';
 $string['config_select_calendar_month'] = 'Month';
 $string['config_select_calendar_year'] = 'Year';
 $string['calendar_date'] = 'Selection of a date';
-$string['confirm_save_singleexamdate_msg'] = 'The {$a->index} single exam date of the exam: \' {$a->name} \' has been saved.';
+$string['confirm_save_singleexamdate_msg'] = 'The {$a->index} single exam date of the exam "{$a->name}" has been saved.';
 $string['error_wrong_email'] = 'Please enter a correct e-mail address with the Enter key - or search in selection!';
 $string['error_wrong_userid_email'] = 'Please enter a correct e-mail address and no numbers!';
-$string['examconfirm_email_subject'] = 'Confirmation of the exam date: {$a->name}';
+$string['examconfirm_email_subject'] = 'Confirmation of the exam date for "{$a->name}"';
 $string['examconfirm_email_body'] = 'The exam date is confirmed for: 
 
 {$a->name}, 
@@ -169,7 +169,7 @@ $string['examconfirm_email_body'] = 'The exam date is confirmed for:
 {$a->url} 
 
 ';
-$string['request_email_subject'] = 'Request exam date: {$a->name}';
+$string['request_email_subject'] = 'Request exam date for "{$a->name}"';
 $string['request_email_body'] = 'The exam date was requested for:
 
 {$a->name}
@@ -181,11 +181,11 @@ Annotations:
 {$a->url}
 
 ';
-$string['examcancel_email_subject'] = 'Cancellation of the date for the exam: {$a->name}';
+$string['examcancel_email_subject'] = 'Cancellation of the date for the exam for "{$a->name}"';
 $string['examcancel_email_body'] = 'The exam date will be canceled for: 
 
 {$a->name}, {$a->date} o\'clock.';
-$string['changerequest_email_subject'] = 'Change request to the exam team for: {$a->name}';
+$string['changerequest_email_subject'] = 'Change request to the exam team for "{$a->name}"';
 $string['changerequest_email_body'] = 'Change request to the exam team
 
 Exam: 
