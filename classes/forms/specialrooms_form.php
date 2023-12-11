@@ -41,7 +41,7 @@ class specialrooms_form extends \moodleform {
         foreach ($rooms as $room) {
             $roomitems = explode('|', $room);
             $roomcapacity = !empty($roomitems[2]) ? ' (max. ' . $roomitems[2] . ' TN)' : '';
-            if (empty($roomcapacity)) {
+            if (!empty($roomcapacity) && !empty($roomitems[1])) {
                 $options[$roomitems[0]] = $roomitems[1] . $roomcapacity;
             }
         };

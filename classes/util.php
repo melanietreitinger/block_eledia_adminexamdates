@@ -462,7 +462,7 @@ class util {
         $specialroomnames = [];
         foreach ($rooms as $room) {
             $roomitems = explode('|', $room);
-            if (empty($roomitems[2])) {
+            if (empty($roomitems[2]) && !empty($roomitems[1])) {
                 $specialroomnames[$roomitems[0]] = $roomitems[1];
             }
         };
@@ -750,10 +750,14 @@ class util {
                 if (!$newblock) {
                     $formdata->roomnumberstudents[$room->examroom] =
                             !empty($room->roomnumberstudents) ? $room->roomnumberstudents : '';
-                    $formdata->roomsupervisor1[$room->examroom] = unserialize($room->roomsupervisor1);
-                    $formdata->roomsupervisor2[$room->examroom] = unserialize($room->roomsupervisor2);
-                    $formdata->roomsupervision1[$room->examroom] = unserialize($room->roomsupervision1);
-                    $formdata->roomsupervision2[$room->examroom] = unserialize($room->roomsupervision2);
+                    $formdata->roomsupervisor1[$room->examroom] = !empty($room->roomsupervisor1) ? unserialize
+                    ($room->roomsupervisor1) : '';
+                    $formdata->roomsupervisor2[$room->examroom] = !empty($room->roomsupervisor2) ? unserialize
+                    ($room->roomsupervisor2) : '';
+                    $formdata->roomsupervision1[$room->examroom] = !empty($room->roomsupervision1) ? unserialize
+                    ($room->roomsupervision1) : '';
+                    $formdata->roomsupervision2[$room->examroom] = !empty($room->roomsupervision2) ? unserialize
+                    ($room->roomsupervision2) : '';
                     $formdata->roomannotationtext[$room->examroom] = $room->roomannotationtext;
                 }
             }
@@ -1062,7 +1066,9 @@ class util {
             if (!empty($roomitems[2])) {
                 array_push($roomswithcapacity, $roomitems[0]);
             };
-            $roomoptions[$roomitems[0]] = $roomitems[1];
+            if (!empty($roomitems[1])) {
+                $roomoptions[$roomitems[0]] = $roomitems[1];
+            }
         };
 
         [$inexamroomssql, $inexamroomsparams] = $DB->get_in_or_equal($roomswithcapacity, SQL_PARAMS_NAMED);

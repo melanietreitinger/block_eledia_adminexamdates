@@ -179,8 +179,8 @@ function xmldb_block_eledia_adminexamdates_install() {
 		VALUES (48, 'Bestätigungen', 0, 'ea')",
             null);
     $DB->execute("INSERT INTO {eledia_adminexamdates_my_itm}
-		VALUES (49, 'Das Fachgebiet ist über das Verfahren bei Bewertungsänderungen (Korrektur bei Einzelpersonen, ' ||
-		            'Nachbewertung von Aufgaben für die ganze Klausur) informiert.', 1, 'ea')",
+		VALUES (49, 'Das Fachgebiet ist über das Verfahren bei Bewertungsänderungen (Korrektur bei Einzelpersonen,  
+		            Nachbewertung von Aufgaben für die ganze Klausur) informiert.', 1, 'ea')",
             null);
     $DB->execute("INSERT INTO {eledia_adminexamdates_my_itm}
 		VALUES (50, 'Bestätigung: Das Fachgebiet übersendet dem E-Klausurteam den verwendeten Notenschlüssel.', 1, 'ea')",
