@@ -1112,7 +1112,7 @@ class util {
         foreach ($dates as $date) {
             $text .= \html_writer::start_tag('tr');
             $hiddenmonth = \html_writer::tag('span', date('Ym', $date->examtimestart), array('class' => 'd-none'));
-            $text .= \html_writer::tag('td', $hiddenmonth . strftime('%B %Y', date($date->examtimestart)));
+            $text .= \html_writer::tag('td', $hiddenmonth . userdate(date($date->examtimestart), '%B %Y'));
             $hiddendate = \html_writer::tag('span', date('YmdHi', $date->examtimestart), array('class' => 'd-none'));
             $text .= \html_writer::tag('td', $hiddendate . date('d.m.Y, H.i', $date->blocktimestart)
                     . '&nbsp;-&nbsp;' . date('H.i', $date->blocktimestart + ($date->blockduration * 60)) .
