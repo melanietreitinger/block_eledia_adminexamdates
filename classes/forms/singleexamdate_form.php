@@ -49,7 +49,9 @@ class singleexamdate_form extends \moodleform {
             if (!empty($roomitems[2])) {
                 array_push($roomcapacity, $roomitems[0]);
             }
-            $options[$roomitems[0]] = $roomitems[1];
+            if (!empty($roomitems[1])) {
+                $options[$roomitems[0]] = $roomitems[1];
+            }
         };
 
         // $blocks =& $this->_customdata['blocks'];

@@ -99,7 +99,9 @@ class examdate_form extends \moodleform {
             if (!empty($roomcapacity)) {
                 array_push($defaultrooms, $roomitems[0]);
             }
-            $options[$roomitems[0]] = $roomitems[1] . $roomcapacity;
+            if (!empty($roomitems[1])) {
+                $options[$roomitems[0]] = $roomitems[1] . $roomcapacity;
+            }
         };
         $settings = array('multiple' => 'multiple');
         if ($hasconfirmexamdatescap) {

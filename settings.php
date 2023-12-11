@@ -30,6 +30,11 @@ if ($ADMIN->fulltree) {
             'block_eledia_adminexamdates'), get_string('config_apitoken',
             'block_eledia_adminexamdates'), '');
 
+    // Prevent empty room list - load default list if empty (231211 treitmzt)
+    $roomlist = get_config('block_eledia_adminexamdates', 'examrooms');
+    if (empty($roomlist)) {
+        set_config('examrooms', get_string('examrooms_default', 'block_eledia_adminexamdates'), 'block_eledia_adminexamdates');
+    }
     $configs[] = new admin_setting_configtextarea('examrooms',
             new lang_string('examrooms', 'block_eledia_adminexamdates'),
             new lang_string('config_examrooms', 'block_eledia_adminexamdates'),

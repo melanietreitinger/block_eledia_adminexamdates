@@ -514,7 +514,9 @@ class util {
         $roomnames = [];
         foreach ($rooms as $room) {
             $roomitems = explode('|', $room);
-            $roomnames[$roomitems[0]] = $roomitems[1];
+            if (!empty($roomitems[1])) {
+                $roomnames[$roomitems[0]] = $roomitems[1];
+            }
         };
         $alreadytakenroom = [];
         foreach ($blockexamrooms as $blockexamroom) {

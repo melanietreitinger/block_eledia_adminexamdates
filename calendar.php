@@ -81,13 +81,21 @@ foreach ($rooms as $room) {
     } else {
         array_push($specialroomitems, $roomitems[0]);
     }
-    $roomnames[$roomitems[0]] = trim($roomitems[1]);
-    $roomcolors[trim($roomitems[1])] = $roomitems[3];
-    $object = new stdClass();
-    $object->category = trim($roomitems[1]);
-    $object->color = trim($roomitems[3]);
-    $roomcategorycolors[] = $object;
-    $roomcategories[] = trim($roomitems[1]);
+    if (!empty($roomitems[1])) {
+        $roomnames[$roomitems[0]] = trim($roomitems[1]);
+        $roomcolors[trim($roomitems[1])] = $roomitems[3];
+        $object = new stdClass();
+        $object->category = trim($roomitems[1]);
+        $object->color = trim($roomitems[3]);
+        $roomcategorycolors[] = $object;
+        $roomcategories[] = trim($roomitems[1]);
+}
+else {
+        $roomnames = [];
+        $roomcolors = [];
+        $roomcategorycolors = [];
+        $roomcategories = [];
+    }
 };
 
 $roomscount = $hasconfirmexamdatescap ? count($roomcategories) : count($roomswithcapacity);
@@ -147,7 +155,7 @@ foreach ($dates as $date) {
             !empty($date->blockduration) && !empty($date->examdateid)) {
 
         $endtime = $date->blocktimestart + ($date->blockduration * 60);
-        $roomname = $roomnames[$date->examroom];
+        $roomname = $roomnames[$date->examroom] ? '';
         $buttonhtml = \html_writer::start_tag('div', ['class' => 'd-inline']);
 
         if ($hasconfirmexamdatescap || !in_array($date->examroom, $specialroomitems)) {
