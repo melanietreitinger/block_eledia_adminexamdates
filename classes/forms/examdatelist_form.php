@@ -24,31 +24,28 @@
 
 namespace block_eledia_adminexamdates\forms;
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
-class examdatelist_form extends \moodleform
-{
+class examdatelist_form extends \moodleform {
 
-    public function definition()
-    {
+    public function definition() {
         $mform =& $this->_form;
-
 
         $mform->addElement('header', '', get_string('examdatelist_header', 'block_eledia_adminexamdates'));
         $options = ['1' => 'Prüfungsraum 1', '2' => 'Prüfungsraum 2'];
-        $mform->addElement('select', 'examroom',
-            get_string('select_examroom', 'block_eledia_adminexamdates'), $options);
+        $mform->addElement('select',
+                'examroom',
+                get_string('select_examroom', 'block_eledia_adminexamdates'),
+                $options);
         $mform->addRule('examroom', null, 'required');
 
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('submit'));
         $buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->closeHeaderBefore('buttonar');
     }
 }

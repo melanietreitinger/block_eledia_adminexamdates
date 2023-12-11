@@ -24,9 +24,7 @@
 
 namespace block_eledia_adminexamdates\forms;
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
@@ -37,13 +35,22 @@ class statistics_form extends \moodleform {
 
         $mform =& $this->_form;
 
-        $radioarray = array();
-        $radioarray[] = $mform->createElement('radio', 'period', '',
-                get_string('period_semester', 'block_eledia_adminexamdates'), 0);
-        $radioarray[] = $mform->createElement('radio', 'period', '',
-                get_string('period_date', 'block_eledia_adminexamdates'), 1);
-        $mform->addGroup($radioarray, 'periods', get_string('select_period', 'block_eledia_adminexamdates'),
-                array(' '), false);
+        $radioarray = [];
+        $radioarray[] = $mform->createElement('radio',
+                'period',
+                '',
+                get_string('period_semester', 'block_eledia_adminexamdates'),
+                0);
+        $radioarray[] = $mform->createElement('radio',
+                'period',
+                '',
+                get_string('period_date', 'block_eledia_adminexamdates'),
+                1);
+        $mform->addGroup($radioarray,
+                'periods',
+                get_string('select_period', 'block_eledia_adminexamdates'),
+                [' '],
+                false);
         $mform->setDefault('period', 0);
 
         $years = [];
@@ -70,26 +77,36 @@ class statistics_form extends \moodleform {
             $defaultsemester = $years[1] . '2';
         }
 
-        $mform->addElement('select', 'semester',
-                get_string('select_semester', 'block_eledia_adminexamdates'), $options);
+        $mform->addElement('select',
+                'semester',
+                get_string('select_semester', 'block_eledia_adminexamdates'),
+                $options);
 
         $mform->setType('semester', PARAM_INT);
         $mform->setDefault('semester', $defaultsemester);
-        $mform->hideIf('semester','period', 'checked');
+        $mform->hideIf('semester', 'period', 'checked');
 
         $mform->addElement('date_selector', 'datestart', get_string('datestart', 'block_eledia_adminexamdates'));
         $mform->addElement('date_selector', 'dateend', get_string('dateend', 'block_eledia_adminexamdates'));
 
-        $mform->hideIf('datestart','period', 'notchecked');
-        $mform->hideIf('dateend','period', 'notchecked');
+        $mform->hideIf('datestart', 'period', 'notchecked');
+        $mform->hideIf('dateend', 'period', 'notchecked');
 
-        $checkboxes= [];
-        $checkboxes[] =
-                $mform->createElement('advcheckbox', "category_regularexam", '',  get_string('category_regularexam', 'block_eledia_adminexamdates'));
-        $checkboxes[] =
-                $mform->createElement('advcheckbox', "category_semestertest", '',  get_string('category_semestertest', 'block_eledia_adminexamdates'));
+        $checkboxes = [];
+        $checkboxes[] = $mform->createElement('advcheckbox',
+                "category_regularexam",
+                '',
+                get_string('category_regularexam', 'block_eledia_adminexamdates'));
+        $checkboxes[] = $mform->createElement('advcheckbox',
+                "category_semestertest",
+                '',
+                get_string('category_semestertest', 'block_eledia_adminexamdates'));
 
-        $mform->addGroup($checkboxes, 'categories', get_string('selection_exam_category', 'block_eledia_adminexamdates'), ['<br>'], false);
+        $mform->addGroup($checkboxes,
+                'categories',
+                get_string('selection_exam_category', 'block_eledia_adminexamdates'),
+                ['<br>'],
+                false);
         $mform->setDefault('category_regularexam', 1);
         $mform->setDefault('category_semestertest', 1);
 
@@ -101,20 +118,23 @@ class statistics_form extends \moodleform {
                 $options[$department] = $departmentchoices[$department];
             }
         }
-        $settings = array('multiple' => 'multiple');
-        $mform->addElement('select', 'department',
-                get_string('department', 'block_eledia_adminexamdates'), $options,$settings);
+        $settings = ['multiple' => 'multiple'];
+        $mform->addElement('select',
+                'department',
+                get_string('department', 'block_eledia_adminexamdates'),
+                $options,
+                $settings);
         $mform->addRule('department', null, 'required', null, 'client');
-        $mform->setDefault('department',  array_keys($options));
+        $mform->setDefault('department', array_keys($options));
 
         $mform->addElement('hidden', 'url');
         $mform->setType('url', PARAM_RAW);
 
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('choose'));
         $buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->closeHeaderBefore('buttonar');
     }
 

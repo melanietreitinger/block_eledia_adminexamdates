@@ -25,33 +25,33 @@
 namespace block_eledia_adminexamdates\forms;
 
 if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
+    die('Direct access to this script is forbidden.');    // It must be included from a Moodle page.
 }
 
 require_once($CFG->libdir . '/formslib.php');
 
-class changerequest_form extends \moodleform
-{
+class changerequest_form extends \moodleform {
 
-    public function definition()
-    {
+    public function definition() {
         $mform =& $this->_form;
-
 
         $mform->addElement('header', '', get_string('changerequest_header', 'block_eledia_adminexamdates'));
 
-        $mform->addElement('textarea', 'changerequesttext', get_string('changerequesttext', 'block_eledia_adminexamdates'), array('rows' => 10, 'cols' => 80));
+        $mform->addElement('textarea',
+                'changerequesttext',
+                get_string('changerequesttext', 'block_eledia_adminexamdates'),
+                ['rows' => 10, 'cols' => 80]);
         $mform->setType('changerequesttext', PARAM_RAW);
         $mform->addRule('changerequesttext', null, 'required');
 
         $mform->addElement('hidden', 'examdateid');
         $mform->setType('examdateid', PARAM_INT);
 
-        $buttonarray = array();
-        $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('send_email','block_eledia_adminexamdates'));
+        $buttonarray = [];
+        $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('send_email', 'block_eledia_adminexamdates'));
         $buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->closeHeaderBefore('buttonar');
     }
 }

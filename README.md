@@ -6,12 +6,11 @@ Anwenderdokumentation zur Installation der eLeDia E-Klausur Termin-Buchungssyste
 
 https://cloud.eledia.de/index.php/s/7JqetLFWYKbsDbk
 
-
 ## Plugin-dependency:
 
 Plugin: mod_elediachecklist
 
-Aktivität eLeDia  E-Klausur Termincheckliste
+Aktivität eLeDia E-Klausur Termincheckliste
 
 https://github.com/eledia/mod_elediachecklist
 

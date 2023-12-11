@@ -26,19 +26,20 @@ global $USER, $CFG, $PAGE, $OUTPUT, $DB;
 
 require_login();
 
-// Get course
-$courseid = $DB->get_field('course_modules', 'course', array('id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')));
-$course = $DB->get_record('course', array('id' => $courseid));
+// Get course.
+$courseid = $DB->get_field('course_modules',
+        'course',
+        ['id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')]);
+$course = $DB->get_record('course', ['id' => $courseid]);
 if (!$course) {
-    print_error('invalidcourseid');
+    throw new \moodle_exception('invalidcourseid', 'block_eledia_adminexamdates');
 }
 require_login($course);
 
 $context = context_course::instance($course->id);
 
-
 if (!has_capability('block/eledia_adminexamdates:confirmexamdates', $context)) {
-    print_error(' only users with rights to confirm admin exam dates allowed');
+    throw new \moodle_exception(' only users with rights to confirm admin exam dates allowed', 'block_eledia_adminexamdates');
 }
 
 $returnurl = optional_param('url', '', PARAM_RAW);
@@ -56,7 +57,7 @@ $PAGE->set_pagelayout('course');
 
 $onlynumberstudents = false;
 
-$mform = new \block_eledia_adminexamdates\forms\statistics_form(null, array('url'=> $returnurl));
+$mform = new \block_eledia_adminexamdates\forms\statistics_form(null, ['url' => $returnurl]);
 
 // Execute the form.
 if ($mform->is_cancelled()) {
@@ -71,30 +72,46 @@ if ($mform->is_cancelled()) {
     $urllist = new moodle_url('/blocks/eledia_adminexamdates/examdateslist.php');
     $unconfirmed = new moodle_url('/blocks/eledia_adminexamdates/examdatesunconfirmed.php');
 
-    echo \html_writer::start_tag('div', array('class' => 'container-fluid px-4'));
-    echo \html_writer::start_tag('div', array('class' => 'row'));
-    echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
-    echo $OUTPUT->single_button($urlcalendar, get_string('calendar_btn', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo $OUTPUT->single_button($urllist, get_string('examdateslist_btn', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo $OUTPUT->single_button($unconfirmed, get_string('unconfirmed_btn', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo $OUTPUT->single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo \html_writer::start_tag('div', array('class' => 'singlebutton mb-3'));
-    echo \html_writer::tag('button', get_string('statistics', 'block_eledia_adminexamdates'),
-            array('disabled' => true, 'class' => 'btn '));
+    echo \html_writer::start_tag('div', ['class' => 'container-fluid px-4']);
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
+    echo $OUTPUT->single_button($urlcalendar,
+            get_string('calendar_btn', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($urllist,
+            get_string('examdateslist_btn', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($unconfirmed,
+            get_string('unconfirmed_btn', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($url,
+            get_string('newexamdate', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo \html_writer::start_tag('div', ['class' => 'singlebutton mb-3']);
+    echo \html_writer::tag('button',
+            get_string('statistics', 'block_eledia_adminexamdates'),
+            ['disabled' => true, 'class' => 'btn ']);
     echo \html_writer::end_tag('div');
-    $urlReport = new moodle_url('/mod/elediachecklist/terminreport.php');
-    echo $OUTPUT->single_button($urlReport, get_string('report_button', 'elediachecklist'), 'get', ['class' => 'singlebutton mb-3']);
+    $urlreport = new moodle_url('/mod/elediachecklist/terminreport.php');
+    echo $OUTPUT->single_button($urlreport,
+            get_string('report_button', 'elediachecklist'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
 
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
 
-    echo \html_writer::start_tag('div',array('class' => 'row'));
-    echo \html_writer::start_tag('div',array('class' => 'col-xs-12'));
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
 
-    echo \html_writer::start_tag('div', array('class' => 'card-deck mt-3'));
-    echo \html_writer::start_tag('div', array('class' => 'card'));
-    echo \html_writer::start_tag('div', array('class' => 'card-body'));
-    echo \html_writer::start_tag('p', array('class' => 'card-text'));
+    echo \html_writer::start_tag('div', ['class' => 'card-deck mt-3']);
+    echo \html_writer::start_tag('div', ['class' => 'card']);
+    echo \html_writer::start_tag('div', ['class' => 'card-body']);
+    echo \html_writer::start_tag('p', ['class' => 'card-text']);
 
     $mform->display();
 
@@ -104,7 +121,7 @@ if ($mform->is_cancelled()) {
     echo \html_writer::end_tag('div');
 
     if (!empty($formdata)) {
-        echo \html_writer::start_tag('div', array('class' => 'col-xs-6'));
+        echo \html_writer::start_tag('div', ['class' => 'col-xs-6']);
         echo block_eledia_adminexamdates\util::get_html_statisticstable($formdata);
         echo \html_writer::end_tag('div');
     }

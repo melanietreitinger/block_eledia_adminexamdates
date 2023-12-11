@@ -26,29 +26,30 @@ global $USER, $CFG, $PAGE, $OUTPUT, $DB;
 
 require_login();
 
-// Get course
-$courseid = $DB->get_field('course_modules', 'course',
-        array('id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')));
-$course = $DB->get_record('course', array('id' => $courseid));
+// Get course.
+$courseid = $DB->get_field('course_modules',
+        'course',
+        ['id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')]);
+$course = $DB->get_record('course', ['id' => $courseid]);
 if (!$course) {
-    print_error('invalidcourseid');
+    throw new \moodle_exception('invalidcourseid', 'block_eledia_adminexamdates');
 }
 require_login($course);
 
 $context = context_course::instance($course->id);
 
 //
-//if (!$course) {
-//    print_error('invalidcourseid');
-//}
-//require_login($course);
+// f (!$course) {
+// throw new \moodle_exception('invalidcourseid', 'block_eledia_adminexamdates');
 //
-//$context = context_course::instance($course->id);
-//// Check basic permission
-//require_capability('block/eledia_courseadmin_fom:view', $context);
+// equire_login($course);
+//
+// context = context_course::instance($course->id);
+// / Check basic permission
+// equire_capability('block/eledia_courseadmin_fom:view', $context);
 
 $newexamdate = optional_param('newexamdate', 0, PARAM_INT);
-//$newexamdateyes = optional_param('newexamdate', 0, PARAM_INT);
+// newexamdateyes = optional_param('newexamdate', 0, PARAM_INT);
 $editexamdate = optional_param('editexamdate', 0, PARAM_INT);
 $examtimestart = optional_param('examtime', 0, PARAM_INT);
 $returnurl = optional_param('url', '', PARAM_RAW);
@@ -72,7 +73,7 @@ if ($editexamdate) {
 }
 
 $mform = new \block_eledia_adminexamdates\forms\examdate_form(null,
-        array('onlynumberstudents' => $onlynumberstudents, 'editexamdate' => $editexamdate, 'url' => $returnurl));
+        ['onlynumberstudents' => $onlynumberstudents, 'editexamdate' => $editexamdate, 'url' => $returnurl]);
 
 // Execute the form.
 if ($mform->is_cancelled()) {
@@ -82,8 +83,8 @@ if ($mform->is_cancelled()) {
     }
     redirect($returnurldecoded);
 } else if ($hasconfirmexamdatescap && !empty($newexamdate)) {
-    $urlspecialrooms = new moodle_url('/blocks/eledia_adminexamdates/specialrooms.php',
-            ['timestart' => $examtimestart, 'url' => $returnurl]);
+    $urlspecialrooms =
+            new moodle_url('/blocks/eledia_adminexamdates/specialrooms.php', ['timestart' => $examtimestart, 'url' => $returnurl]);
     $message = get_string('chooseroomcategory_msg', 'block_eledia_adminexamdates');
     echo $OUTPUT->header();
     echo $OUTPUT->box_start('generalbox centerpara boxwidthnormal boxaligncenter');
@@ -92,7 +93,7 @@ if ($mform->is_cancelled()) {
             get_string('newexamdate', 'block_eledia_adminexamdates'));
     echo $OUTPUT->single_button($urlspecialrooms, get_string('book_specialrooms', 'block_eledia_adminexamdates'));
     echo $OUTPUT->single_button($returnurldecoded, get_string('cancel'));
-    //echo $OUTPUT->confirm($message, $continueexamdate, $bookspecialroom);
+    // echo $OUTPUT->confirm($message, $continueexamdate, $bookspecialroom);
     echo $OUTPUT->box_end();
 } else if (empty($formdata = $mform->get_data())) {
 
@@ -106,8 +107,8 @@ if ($mform->is_cancelled()) {
         $mform->set_data($data);
     } else {
         $beginofday = strtotime("today", $examtimestart);
-        $startexam = $beginofday + (get_config('block_eledia_adminexamdates', 'startexam_hour') * 3600)
-                + (get_config('block_eledia_adminexamdates', 'startexam_minute') * 60);
+        $startexam = $beginofday + (get_config('block_eledia_adminexamdates', 'startexam_hour') * 3600) +
+                (get_config('block_eledia_adminexamdates', 'startexam_minute') * 60);
         if ($examtimestart < $startexam) {
             $examtimestart = $startexam;
         }
@@ -127,9 +128,9 @@ if ($mform->is_cancelled()) {
     $urlcalendar = new moodle_url('/blocks/eledia_adminexamdates/calendar.php');
     $statistics = new moodle_url('/blocks/eledia_adminexamdates/statistics.php', ['url' => rawurlencode($myurl)]);
 
-    echo \html_writer::start_tag('div', array('class' => 'container-fluid px-4'));
-    echo \html_writer::start_tag('div', array('class' => 'row'));
-    echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
+    echo \html_writer::start_tag('div', ['class' => 'container-fluid px-4']);
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
     echo $OUTPUT->single_button($urlcalendar, get_string('calendar_btn', 'block_eledia_adminexamdates'));
     if ($hasconfirmexamdatescap) {
         echo $OUTPUT->single_button($urllist, get_string('examdateslist_btn', 'block_eledia_adminexamdates'));
@@ -140,25 +141,27 @@ if ($mform->is_cancelled()) {
     }
     if ($hasconfirmexamdatescap) {
         if (empty($editexamdate)) {
-            echo \html_writer::start_tag('div', array('class' => 'singlebutton mb-3'));
-            echo \html_writer::tag('button', get_string('newexamdate', 'block_eledia_adminexamdates'),
-                    array('disabled' => true, 'class' => 'btn '));
+            echo \html_writer::start_tag('div', ['class' => 'singlebutton mb-3']);
+            echo \html_writer::tag('button',
+                    get_string('newexamdate', 'block_eledia_adminexamdates'),
+                    ['disabled' => true, 'class' => 'btn ']);
             echo \html_writer::end_tag('div');
         } else {
             echo $OUTPUT->single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'));
         }
         echo $OUTPUT->single_button($statistics, get_string('statistics', 'block_eledia_adminexamdates'));
-        $urlReport = new moodle_url('/mod/elediachecklist/terminreport.php');
-        echo $OUTPUT->single_button($urlReport, get_string('report_button', 'elediachecklist'), 'get');
+        $urlreport = new moodle_url('/mod/elediachecklist/terminreport.php');
+        echo $OUTPUT->single_button($urlreport, get_string('report_button', 'elediachecklist'), 'get');
     }
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
     if ($hasconfirmexamdatescap && !$newexamdate && !empty($editexamdate)) {
-        echo \html_writer::start_tag('div', array('class' => 'row mt-3'));
-        echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
-        echo \html_writer::start_tag('div', array('class' => 'singlebutton mb-3'));
-        echo \html_writer::tag('button', get_string('editexamdate_btn', 'block_eledia_adminexamdates'),
-                array('disabled' => true, 'class' => 'btn '));
+        echo \html_writer::start_tag('div', ['class' => 'row mt-3']);
+        echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
+        echo \html_writer::start_tag('div', ['class' => 'singlebutton mb-3']);
+        echo \html_writer::tag('button',
+                get_string('editexamdate_btn', 'block_eledia_adminexamdates'),
+                ['disabled' => true, 'class' => 'btn ']);
         echo \html_writer::end_tag('div');
         $checklistcmid = get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist');
         $checklistlink = new \moodle_url('/mod/elediachecklist/tabtermin.php', ['id' => $checklistcmid, 'examid' => $editexamdate]);
@@ -169,61 +172,60 @@ if ($mform->is_cancelled()) {
         echo \html_writer::end_tag('div');
         echo \html_writer::end_tag('div');
     }
-    echo \html_writer::start_tag('div', array('class' => 'row mt-3'));
+    echo \html_writer::start_tag('div', ['class' => 'row mt-3']);
     if ($onlynumberstudents) {
-        echo \html_writer::start_tag('div', array('class' => 'col-sm-6'));
+        echo \html_writer::start_tag('div', ['class' => 'col-sm-6']);
     } else {
-        echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
+        echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
     }
 
     if ($hasconfirmexamdatescap && $newexamdate) {
-        $urlspecialrooms =
-                new moodle_url('/blocks/eledia_adminexamdates/specialrooms.php', ['timestart' => $examtimestart]);
+        $urlspecialrooms = new moodle_url('/blocks/eledia_adminexamdates/specialrooms.php', ['timestart' => $examtimestart]);
         echo $OUTPUT->single_button($urlspecialrooms, get_string('book_specialrooms', 'block_eledia_adminexamdates'));
     }
     $param = (!empty($examtimestart) && is_integer($examtimestart)) ? ['displaydate' => $examtimestart] : null;
     $calendarurl = new \moodle_url('/blocks/eledia_adminexamdates/calendar.php', $param);
-    //echo $OUTPUT->single_button($calendarurl, get_string('cancel'), 'post');
+    // echo $OUTPUT->single_button($calendarurl, get_string('cancel'), 'post');
 
-    echo \html_writer::start_tag('div', array('class' => 'card-deck'));
-    echo \html_writer::start_tag('div', array('class' => 'card'));
-    echo \html_writer::start_tag('div', array('class' => 'card-body'));
-    echo \html_writer::start_tag('p', array('class' => 'card-text'));
+    echo \html_writer::start_tag('div', ['class' => 'card-deck']);
+    echo \html_writer::start_tag('div', ['class' => 'card']);
+    echo \html_writer::start_tag('div', ['class' => 'card-body']);
+    echo \html_writer::start_tag('p', ['class' => 'card-text']);
 
     $mform->display();
 
-    //echo ' <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>';
-    //echo \html_writer::tag('script',
-    //        "
-    //         $(document).ready(function () {
-    //            $('#id_examtimestart_month').on('change',function () {
-    //                year=$( '#id_examtimestart_year').val();
-    //                month=$(this).val();
-    //                if(month <= 3){
-    //                    semester=(year-1)+'2';
-    //                } else if(month <=9){
-    //                    semester=(year)+'1';
-    //                } else {
-    //                 semester=(year)+'2';
-    //                }
-    //                $( '#id_semester').val(semester);
-    //            });
-    //             $('#id_examtimestart_year').on('change',function () {
-    //                 month=$( '#id_examtimestart_month').val();
-    //                year=$(this).val();
-    //                 if(month <= 3){
-    //                    semester=(year-1)+'2';
-    //                } else if(month <=9){
-    //                    semester=(year)+'1';
-    //                } else {
-    //                 semester=(year)+'2';
-    //                }
-    //                 $( '#id_semester').val(semester);
-    //            });
+    // echo ' <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>';
+    // echo \html_writer::tag('script',
+    // "
+    // $(document).ready(function () {
+    // $('#id_examtimestart_month').on('change',function () {
+    // year=$( '#id_examtimestart_year').val();
+    // month=$(this).val();
+    // if(month <= 3){
+    // semester=(year-1)+'2';
+    // } else if(month <=9){
+    // semester=(year)+'1';
+    // } else {
+    // semester=(year)+'2';
+    // }
+    // $( '#id_semester').val(semester);
+    // });
+    // $('#id_examtimestart_year').on('change',function () {
+    // month=$( '#id_examtimestart_month').val();
+    // year=$(this).val();
+    // if(month <= 3){
+    // semester=(year-1)+'2';
+    // } else if(month <=9){
+    // semester=(year)+'1';
+    // } else {
+    // semester=(year)+'2';
+    // }
+    // $( '#id_semester').val(semester);
+    // });
     //
     //
-    //        });
-    //       ");
+    // });
+    // ");
 
     echo \html_writer::end_tag('p');
     echo \html_writer::end_tag('div');
@@ -245,13 +247,13 @@ if ($mform->is_cancelled()) {
     if ($needfreetimeslots) {
         block_eledia_adminexamdates\util::getfreetimeslots2($examdateid, $formdata);
 
-        //if ($hasconfirmexamdatescap) {
-        //    redirect(new moodle_url('/blocks/eledia_adminexamdates/editsingleexamdate.php', ['examdateid' => $examdateid]));
-        //}
+        // if ($hasconfirmexamdatescap) {
+        // redirect(new moodle_url('/blocks/eledia_adminexamdates/editsingleexamdate.php', ['examdateid' => $examdateid]));
+        // }
 
     } else {
-        if (($examdate->examtimestart != $formdata->examtimestart) || ($examdate->examduration != $formdata->examduration)
-                || ($examdate->numberstudents != $formdata->numberstudents)) {
+        if (($examdate->examtimestart != $formdata->examtimestart) || ($examdate->examduration != $formdata->examduration) ||
+                ($examdate->numberstudents != $formdata->numberstudents)) {
             block_eledia_adminexamdates\util::updatefreetimeslots2($examdateid, $formdata);
         }
     }

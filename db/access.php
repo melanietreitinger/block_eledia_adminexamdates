@@ -15,20 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
-
-
-    'block/eledia_adminexamdates:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    ),
-
-    'block/eledia_adminexamdates:confirmexamdates' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM
-    ),
-
-);
+$capabilities = [
+    'block/eledia_adminexamdates:addinstance' => [
+            'riskbitmask' => RISK_SPAM | RISK_XSS,
+            'captype' => 'write',
+            'contextlevel' => CONTEXT_BLOCK,
+            'clonepermissionsfrom' => 'moodle/site:manageblocks',
+            ],
+    'block/eledia_adminexamdates:confirmexamdates' => [
+            'captype' => 'write',
+            'contextlevel' => CONTEXT_SYSTEM,
+    ],
+];

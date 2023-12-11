@@ -24,9 +24,7 @@
 
 namespace block_eledia_adminexamdates\forms;
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
@@ -35,21 +33,24 @@ class examdatesconfirmed_form extends \moodleform {
     public function definition() {
         $mform =& $this->_form;
 
-        $mform->addElement('date_selector', 'displaydatefrom',
+        $mform->addElement('date_selector',
+                'displaydatefrom',
                 get_string('exam_dates_confirmed_start_date', 'block_eledia_adminexamdates'));
         $mform->setDefault('displaydatefrom', time());
         $mform->setType('displaydatefrom', PARAM_INT);
 
-        $mform->addElement('date_selector', 'displaydateto',
-                get_string('exam_dates_confirmed_end_date', 'block_eledia_adminexamdates'), ['optional' => true]);
+        $mform->addElement('date_selector',
+                'displaydateto',
+                get_string('exam_dates_confirmed_end_date', 'block_eledia_adminexamdates'),
+                ['optional' => true]);
         $mform->setDefault('displaydateto', time());
         $mform->setType('displaydateto', PARAM_INT);
 
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('choose'));
-        //$buttonarray[] = &$mform->createElement('cancel');
+        // $buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
-        //$mform->closeHeaderBefore('buttonar');
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
+        // $mform->closeHeaderBefore('buttonar');
     }
 }

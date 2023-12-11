@@ -26,19 +26,20 @@ global $USER, $CFG, $PAGE, $OUTPUT, $DB;
 
 require_login();
 
-// Get course
-$courseid = $DB->get_field('course_modules', 'course', array('id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')));
-$course = $DB->get_record('course', array('id' => $courseid));
+// Get course.
+$courseid = $DB->get_field('course_modules',
+        'course',
+        ['id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')]);
+$course = $DB->get_record('course', ['id' => $courseid]);
 if (!$course) {
-    print_error('invalidcourseid');
+    throw new \moodle_exception('invalidcourseid');
 }
 require_login($course);
 
 $context = context_course::instance($course->id);
 
-
 if (!has_capability('block/eledia_adminexamdates:confirmexamdates', $context)) {
-    print_error(' only users with rights to confirm admin exam dates allowed');
+    throw new \moodle_exception(' only users with rights to confirm admin exam dates allowed', 'instanceofmodelediachecklist');
 }
 
 $booktimestart = optional_param('timestart', 0, PARAM_INT);
@@ -80,8 +81,10 @@ if ($mform->is_cancelled()) {
             array_push($roomnames, $roomitems[1]);
         }
     }
-    $date = date('d.m.Y, H.i', $block->blocktimestart) . ' - ' . date('H.i', $block->blocktimestart + ($block->blockduration * 60)). get_string('hour', 'block_eledia_adminexamdates');
-    $message = get_string('cancelspecialrooms_msg', 'block_eledia_adminexamdates',
+    $date = date('d.m.Y, H.i', $block->blocktimestart) . ' - ' .
+            date('H.i', $block->blocktimestart + ($block->blockduration * 60)) . get_string('hour', 'block_eledia_adminexamdates');
+    $message = get_string('cancelspecialrooms_msg',
+            'block_eledia_adminexamdates',
             ['date' => $date, 'rooms' => implode(', ', $roomnames)]);
     $formcontinue =
             new single_button(new moodle_url($PAGE->url, ['cancelspecialroomsyes' => $cancelspecialrooms]), get_string('yes'));

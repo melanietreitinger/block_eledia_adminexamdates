@@ -24,17 +24,13 @@
 
 namespace block_eledia_adminexamdates\forms;
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
-class specialrooms_form extends \moodleform
-{
+class specialrooms_form extends \moodleform {
 
-    public function definition()
-    {
+    public function definition() {
 
         $hasconfirmexamdatescap = has_capability('block/eledia_adminexamdates:confirmexamdates', \context_system::instance());
 
@@ -49,10 +45,13 @@ class specialrooms_form extends \moodleform
                 $options[$roomitems[0]] = $roomitems[1] . $roomcapacity;
             }
         };
-        $settings = array('multiple' => 'multiple');
+        $settings = ['multiple' => 'multiple'];
 
-        $mform->addElement('select', 'specialrooms',
-                get_string('select_specialroom', 'block_eledia_adminexamdates'), $options, $settings);
+        $mform->addElement('select',
+                'specialrooms',
+                get_string('select_specialroom', 'block_eledia_adminexamdates'),
+                $options,
+                $settings);
         $mform->addRule('specialrooms', null, 'required');
         $mform->setType('specialrooms', PARAM_RAW);
 
@@ -64,7 +63,10 @@ class specialrooms_form extends \moodleform
         $mform->addRule('bookduration', null, 'required', null, 'client');
         $mform->addRule('bookduration', null, 'numeric', null, 'client');
 
-        $mform->addElement('textarea', 'annotationtext', get_string('annotationtext', 'block_eledia_adminexamdates'), array('rows' => 10, 'cols' => 80));
+        $mform->addElement('textarea',
+                'annotationtext',
+                get_string('annotationtext', 'block_eledia_adminexamdates'),
+                ['rows' => 10, 'cols' => 80]);
         $mform->setType('annotationtext', PARAM_RAW);
 
         $mform->addElement('hidden', 'blockid');
@@ -73,16 +75,15 @@ class specialrooms_form extends \moodleform
         $mform->addElement('hidden', 'url');
         $mform->setType('url', PARAM_RAW);
 
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('submit'));
         $buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->closeHeaderBefore('buttonar');
     }
 
-    public function validation($data, $files)
-    {
+    public function validation($data, $files) {
 
         $errors = parent::validation($data, $files);
         if ($error = \block_eledia_adminexamdates\util::istakenspecialrooms($data)) {

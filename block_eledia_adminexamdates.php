@@ -29,14 +29,12 @@
  * @copyright  2021 René Hansen <support@eledia.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_eledia_adminexamdates extends block_base
-{
+class block_eledia_adminexamdates extends block_base {
 
     /**
      * Initializes class member variables.
      */
-    public function init()
-    {
+    public function init() {
         // Needed by Moodle to differentiate between blocks.
         $this->title = get_string('pluginname', 'block_eledia_adminexamdates');
     }
@@ -46,8 +44,7 @@ class block_eledia_adminexamdates extends block_base
      *
      * @return stdClass The block contents.
      */
-    public function get_content()
-    {
+    public function get_content() {
         if ($this->content !== null) {
             return $this->content;
         }
@@ -58,8 +55,8 @@ class block_eledia_adminexamdates extends block_base
         }
 
         $this->content = new stdClass();
-        $this->content->items = array();
-        $this->content->icons = array();
+        $this->content->items = [];
+        $this->content->icons = [];
         $this->content->footer = '';
 
         if (!empty($this->config->text)) {
@@ -68,16 +65,16 @@ class block_eledia_adminexamdates extends block_base
             $text = '';
             $strexamdatesunconfirmedbutton = get_string('examdatesunconfirmed', 'block_eledia_adminexamdates');
             $examdatesunconfirmedurl = new \moodle_url('/blocks/eledia_adminexamdates/examdatesunconfirmed.php');
-            $text .= html_writer::link($examdatesunconfirmedurl, $strexamdatesunconfirmedbutton, array('class' => 'btn btn-primary w-100 mb-2'));
+            $text .= html_writer::link($examdatesunconfirmedurl,
+                    $strexamdatesunconfirmedbutton,
+                    ['class' => 'btn btn-primary w-100 mb-2']);
         }
         $this->content->text = $text;
-
 
         return $this->content;
     }
 
-    public function has_config()
-    {
+    public function has_config() {
         return true;
     }
 

@@ -24,14 +24,15 @@ require('../../config.php');
 
 global $USER, $CFG, $PAGE, $OUTPUT, $DB;
 
-
 require_login();
 
-// Get course
-$courseid = $DB->get_field('course_modules', 'course', array('id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')));
-$course = $DB->get_record('course', array('id' => $courseid));
+// Get course.
+$courseid = $DB->get_field('course_modules',
+        'course',
+        ['id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')]);
+$course = $DB->get_record('course', ['id' => $courseid]);
 if (!$course) {
-    print_error('invalidcourseid');
+    throw new \moodle_exception('invalidcourseid', 'block_eledia_adminexamdates');
 }
 require_login($course);
 
@@ -56,47 +57,48 @@ $PAGE->set_pagelayout('course');
 
 $mform = new \block_eledia_adminexamdates\forms\examdatesconfirmed_form();
 
-    echo $OUTPUT->header();
-    echo $OUTPUT->container_start();
+echo $OUTPUT->header();
+echo $OUTPUT->container_start();
 
-    //$url = new moodle_url('/blocks/eledia_adminexamdates/editexamdate.php', ['newexamdate' => 1, 'url' => rawurlencode($myurl) ]);
-    //$newexamdatebutton = new single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'));
-    $urlcalendar = new moodle_url('/blocks/eledia_adminexamdates/calendar.php');
-    $unconfirmed = new moodle_url('/blocks/eledia_adminexamdates/examdatesunconfirmed.php');
+// url = new moodle_url('/blocks/eledia_adminexamdates/editexamdate.php', ['newexamdate' => 1, 'url' => rawurlencode($myurl) ]);
+// newexamdatebutton = new single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'));
+$urlcalendar = new moodle_url('/blocks/eledia_adminexamdates/calendar.php');
+$unconfirmed = new moodle_url('/blocks/eledia_adminexamdates/examdatesunconfirmed.php');
 
-    echo \html_writer::start_tag('div',array('class' => 'container-fluid px-4'));
-    echo \html_writer::start_tag('div',array('class' => 'row'));
-    echo \html_writer::start_tag('div',array('class' => 'col-xs-12'));
+echo \html_writer::start_tag('div', ['class' => 'container-fluid px-4']);
+echo \html_writer::start_tag('div', ['class' => 'row']);
+echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
 
-    echo $OUTPUT->single_button($urlcalendar, get_string('calendar_btn', 'block_eledia_adminexamdates'));
-    echo $OUTPUT->single_button($unconfirmed, get_string('unconfirmed_btn', 'block_eledia_adminexamdates'));
-    echo \html_writer::start_tag('div',array('class' => 'singlebutton mb-3'));
-    echo \html_writer::tag('button', get_string('confirmed_btn', 'block_eledia_adminexamdates'), array('disabled' => true, 'class' => 'btn '));
-    echo \html_writer::end_tag('div');
-    //echo $OUTPUT->single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'));
-    echo \html_writer::end_tag('div');
-    echo \html_writer::end_tag('div');
-    echo \html_writer::start_tag('div',array('class' => 'row mt-3'));
-    echo \html_writer::start_tag('div',array('class' => 'col-xs-12'));
-    echo \html_writer::start_tag('div', array('class' => 'card-deck'));
-    echo \html_writer::start_tag('div', array('class' => 'card'));
-    echo \html_writer::start_tag('div', array('class' => 'card-body'));
-    echo \html_writer::start_tag('p', array('class' => 'card-text'));
+echo $OUTPUT->single_button($urlcalendar, get_string('calendar_btn', 'block_eledia_adminexamdates'));
+echo $OUTPUT->single_button($unconfirmed, get_string('unconfirmed_btn', 'block_eledia_adminexamdates'));
+echo \html_writer::start_tag('div', ['class' => 'singlebutton mb-3']);
+echo \html_writer::tag('button',
+        get_string('confirmed_btn', 'block_eledia_adminexamdates'),
+        ['disabled' => true, 'class' => 'btn ']);
+echo \html_writer::end_tag('div');
+// cho $OUTPUT->single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'));
+echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
+echo \html_writer::start_tag('div', ['class' => 'row mt-3']);
+echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
+echo \html_writer::start_tag('div', ['class' => 'card-deck']);
+echo \html_writer::start_tag('div', ['class' => 'card']);
+echo \html_writer::start_tag('div', ['class' => 'card-body']);
+echo \html_writer::start_tag('p', ['class' => 'card-text']);
 
-    $mform->display();
-    echo block_eledia_adminexamdates\util::getexamdateitems(true,$displaydatefrom, $displaydateto);
+$mform->display();
+echo block_eledia_adminexamdates\util::getexamdateitems(true, $displaydatefrom, $displaydateto);
 
-    echo \html_writer::end_tag('p');
-    echo \html_writer::end_tag('div');
-    echo \html_writer::end_tag('div');
-    echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('p');
+echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
 
-    echo \html_writer::end_tag('div');
-    echo \html_writer::end_tag('div');
-    echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
+echo \html_writer::end_tag('div');
 
-    echo $OUTPUT->container_end();
-
+echo $OUTPUT->container_end();
 
 echo $OUTPUT->footer();
 

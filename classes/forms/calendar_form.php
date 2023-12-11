@@ -24,46 +24,42 @@
 
 namespace block_eledia_adminexamdates\forms;
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
-class calendar_form extends \moodleform
-{
+class calendar_form extends \moodleform {
 
-    public function definition()
-    {
+    public function definition() {
         $mform =& $this->_form;
 
-    /*    $years = [];
-        $yearnow = date('Y');
-        for ($i = date('Y', strtotime('-10 years')); $i <= date('Y', strtotime('+10 years')); $i++) {
-            $years[$i] = $i;
-        }
-        $months = [];
-        $monthnow = date('m');
-        for ($i = 1 ; $i <= 12 ; $i++){
-            $months[$i] =  utf8_encode(strftime('%B', mktime(0, 0, 0, $i)));
-        }
+        /*    $years = [];
+            $yearnow = date('Y');
+            for ($i = date('Y', strtotime('-10 years')); $i <= date('Y', strtotime('+10 years')); $i++) {
+                $years[$i] = $i;
+            }
+            $months = [];
+            $monthnow = date('m');
+            for ($i = 1 ; $i <= 12 ; $i++){
+                $months[$i] =  utf8_encode(strftime('%B', mktime(0, 0, 0, $i)));
+            }
 
-        $mform->addElement('select', 'month',
-            get_string('config_select_calendar_month', 'block_eledia_adminexamdates'), $months);
-        $mform->setDefault('month', $monthnow);
+            $mform->addElement('select', 'month',
+                get_string('config_select_calendar_month', 'block_eledia_adminexamdates'), $months);
+            $mform->setDefault('month', $monthnow);
 
-        $mform->addElement('select', 'year',
-            get_string('config_select_calendar_year', 'block_eledia_adminexamdates'), $years);
-        $mform->setDefault('year', $yearnow);*/
+            $mform->addElement('select', 'year',
+                get_string('config_select_calendar_year', 'block_eledia_adminexamdates'), $years);
+            $mform->setDefault('year', $yearnow);*/
         $mform->addElement('date_selector', 'selectdisplaydate', get_string('calendar_date', 'block_eledia_adminexamdates'));
         $mform->setDefault('selectdisplaydate', time());
         $mform->setType('selectdisplaydate', PARAM_INT);
-       // $mform->setDefault('date', $yearnow)
-        $buttonarray = array();
+        // $mform->setDefault('date', $yearnow)
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton', get_string('choose'));
-        //$buttonarray[] = &$mform->createElement('cancel');
+        // $+buttonarray[] = &$mform->createElement('cancel');
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
-       //$mform->closeHeaderBefore('buttonar');
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
+        // $+mform->closeHeaderBefore('buttonar');
     }
 }

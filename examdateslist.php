@@ -26,19 +26,20 @@ global $USER, $CFG, $PAGE, $OUTPUT, $DB;
 
 require_login();
 
-// Get course
-$courseid = $DB->get_field('course_modules', 'course', array('id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')));
-$course = $DB->get_record('course', array('id' => $courseid));
+// Get course.
+$courseid = $DB->get_field('course_modules',
+        'course',
+        ['id' => get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist')]);
+$course = $DB->get_record('course', ['id' => $courseid]);
 if (!$course) {
-    print_error('invalidcourseid');
+    throw new \moodle_exception('invalidcourseid', 'block_eledia_adminexamdates');
 }
 require_login($course);
 
 $context = context_course::instance($course->id);
 
-
 if (!has_capability('block/eledia_adminexamdates:confirmexamdates', $context)) {
-    print_error(' only users with rights to confirm admin exam dates allowed');
+    throw new \moodle_exception(' only users with rights to confirm admin exam dates allowed', 'block_eledia_adminexamdates');
 }
 
 $confirmexamdate = optional_param('confirmexamdate', 0, PARAM_INT);
@@ -58,12 +59,11 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_title(get_string('examdateslist_btn', 'block_eledia_adminexamdates'));
 $PAGE->set_pagelayout('course');
 $PAGE->requires->jquery();
-//echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
+// cho '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>';
 if (!empty($confirmexamdate)) {
     $examdatename = $DB->get_record('eledia_adminexamdates', ['id' => $confirmexamdate], 'examname');
     $message = get_string('confirmexamdatemsg', 'block_eledia_adminexamdates', ['name' => $examdatename->examname]);
-    $formcontinue =
-            new single_button(new moodle_url($PAGE->url, ['confirmexamdateyes' => $confirmexamdate]), get_string('yes'));
+    $formcontinue = new single_button(new moodle_url($PAGE->url, ['confirmexamdateyes' => $confirmexamdate]), get_string('yes'));
     $formcancel = new single_button(new moodle_url($PAGE->url), get_string('no'));
     echo $OUTPUT->header();
     echo $OUTPUT->box_start('generalbox');
@@ -73,8 +73,7 @@ if (!empty($confirmexamdate)) {
 } else if (!empty($cancelexamdate)) {
     $examdatename = $DB->get_record('eledia_adminexamdates', ['id' => $cancelexamdate], 'examname');
     $message = get_string('cancelexamdatemsg', 'block_eledia_adminexamdates', ['name' => $examdatename->examname]);
-    $formcontinue =
-            new single_button(new moodle_url($PAGE->url, ['cancelexamdateyes' => $cancelexamdate]), get_string('yes'));
+    $formcontinue = new single_button(new moodle_url($PAGE->url, ['cancelexamdateyes' => $cancelexamdate]), get_string('yes'));
     $formcancel = new single_button(new moodle_url($PAGE->url), get_string('no'));
     echo $OUTPUT->header();
     echo $OUTPUT->box_start('generalbox');
@@ -94,54 +93,73 @@ if (!empty($confirmexamdate)) {
     echo $OUTPUT->container_start();
 
     $url = new moodle_url('/blocks/eledia_adminexamdates/editexamdate.php', ['newexamdate' => 1, 'url' => rawurlencode($myurl)]);
-    $newexamdatebutton = new single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
+    $newexamdatebutton = new single_button($url,
+            get_string('newexamdate', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
     $urlcalendar = new moodle_url('/blocks/eledia_adminexamdates/calendar.php');
     $unconfirmed = new moodle_url('/blocks/eledia_adminexamdates/examdatesunconfirmed.php');
     $statistics = new moodle_url('/blocks/eledia_adminexamdates/statistics.php', ['url' => rawurlencode($myurl)]);
 
-    echo \html_writer::start_tag('div', array('class' => 'container-fluid px-4'));
-    echo \html_writer::start_tag('div', array('class' => 'row'));
-    echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
+    echo \html_writer::start_tag('div', ['class' => 'container-fluid px-4']);
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
 
-    echo $OUTPUT->single_button($urlcalendar, get_string('calendar_btn', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo \html_writer::start_tag('div', array('class' => 'singlebutton mb-3'));
-    echo \html_writer::tag('button', get_string('examdateslist_btn', 'block_eledia_adminexamdates'),
-            array('disabled' => true, 'class' => 'btn '));
+    echo $OUTPUT->single_button($urlcalendar,
+            get_string('calendar_btn', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo \html_writer::start_tag('div', ['class' => 'singlebutton mb-3']);
+    echo \html_writer::tag('button',
+            get_string('examdateslist_btn', 'block_eledia_adminexamdates'),
+            ['disabled' => true, 'class' => 'btn ']);
     echo \html_writer::end_tag('div');
-    echo $OUTPUT->single_button($unconfirmed, get_string('unconfirmed_btn', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo $OUTPUT->single_button($url, get_string('newexamdate', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    echo $OUTPUT->single_button($statistics, get_string('statistics', 'block_eledia_adminexamdates'), 'get', ['class' => 'singlebutton mb-3']);
-    $urlReport = new moodle_url('/mod/elediachecklist/terminreport.php');
-    echo $OUTPUT->single_button($urlReport, get_string('report_button', 'elediachecklist'), 'get', ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($unconfirmed,
+            get_string('unconfirmed_btn', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($url,
+            get_string('newexamdate', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    echo $OUTPUT->single_button($statistics,
+            get_string('statistics', 'block_eledia_adminexamdates'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
+    $urlreport = new moodle_url('/mod/elediachecklist/terminreport.php');
+    echo $OUTPUT->single_button($urlreport,
+            get_string('report_button', 'elediachecklist'),
+            'get',
+            ['class' => 'singlebutton mb-3']);
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
-    echo \html_writer::start_tag('div', array('class' => 'row'));
-    echo \html_writer::start_tag('div', array('class' => 'col-xs-12'));
-    //echo \html_writer::start_tag('p');
-    //// echo \html_writer::tag('h1', get_string('examdateslist_btn', 'block_eledia_adminexamdates'));
-    //echo \html_writer::end_tag('p');
-    echo \html_writer::start_tag('div', array('class' => 'card-deck mt-3'));
-    echo \html_writer::start_tag('div', array('class' => 'card'));
-    echo \html_writer::start_tag('div', array('class' => 'card-body'));
-    echo \html_writer::start_tag('p', array('class' => 'card-text'));
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-xs-12']);
+    // echo \html_writer::start_tag('p');
+    // echo \html_writer::tag('h1', get_string('examdateslist_btn', 'block_eledia_adminexamdates'));
+    // echo \html_writer::end_tag('p');
+    echo \html_writer::start_tag('div', ['class' => 'card-deck mt-3']);
+    echo \html_writer::start_tag('div', ['class' => 'card']);
+    echo \html_writer::start_tag('div', ['class' => 'card-body']);
+    echo \html_writer::start_tag('p', ['class' => 'card-text']);
 
     $urleditsingleexamdate = new moodle_url('/blocks/eledia_adminexamdates/editsingleexamdate.php', ['blockid' => '']);
     echo $OUTPUT->box($OUTPUT->single_button($urleditsingleexamdate, ''), 'd-none', 'editsingleexamdate');
 
-    //  echo '<link rel="stylesheet" type="text/css" href="datatables/datatables.min.css"/>';
-    //    echo '<style>
+    // echo '<link rel="stylesheet" type="text/css" href="datatables/datatables.min.css"/>';
+    // echo '<style>
     //
-    //</style>';
+    // </style>';
 
-    echo \html_writer::start_tag('div', array('class' => 'mb-1'));
-    echo \html_writer::start_tag('div', array('class' => 'row'));
-    echo \html_writer::start_tag('div', array('class' => 'col-md-4'));
+    echo \html_writer::start_tag('div', ['class' => 'mb-1']);
+    echo \html_writer::start_tag('div', ['class' => 'row']);
+    echo \html_writer::start_tag('div', ['class' => 'col-md-4']);
     echo block_eledia_adminexamdates\util::get_html_select_semester($semester);
     echo \html_writer::end_tag('div');
-    echo \html_writer::start_tag('div', array('class' => 'col-md-6'));
-    echo block_eledia_adminexamdates\util::get_html_select_month($frommonth, $fromyear,$tomonth,$toyear);
+    echo \html_writer::start_tag('div', ['class' => 'col-md-6']);
+    echo block_eledia_adminexamdates\util::get_html_select_month($frommonth, $fromyear, $tomonth, $toyear);
     echo \html_writer::end_tag('div');
-    echo \html_writer::start_tag('div', array('id' => 'examdatestable-btn-place','class' => 'col-md-2'));
+    echo \html_writer::start_tag('div', ['id' => 'examdatestable-btn-place', 'class' => 'col-md-2']);
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
@@ -155,14 +173,14 @@ if (!empty($confirmexamdate)) {
         echo \html_writer::start_tag('div', array('class' => 'card'));
         echo \html_writer::start_tag('div', array('class' => 'card-body'));
         echo \html_writer::start_tag('p', array('class' => 'card-text'));*/
-    echo block_eledia_adminexamdates\util::getexamdatetable($semester,$frommonth, $fromyear,$tomonth,$toyear);
+    echo block_eledia_adminexamdates\util::getexamdatetable($semester, $frommonth, $fromyear, $tomonth, $toyear);
     echo \html_writer::end_tag('p');
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
     echo \html_writer::end_tag('div');
 
     $checklistcmid = get_config('block_eledia_adminexamdates', 'instanceofmodelediachecklist');
-    $checklistlink = new \moodle_url('/mod/elediachecklist/tabtermin.php', ['id' => $checklistcmid ]);
+    $checklistlink = new \moodle_url('/mod/elediachecklist/tabtermin.php', ['id' => $checklistcmid]);
     echo '<script type="text/javascript">';
     $title = get_string('examdateslist_btn', 'block_eledia_adminexamdates');
     echo '$(document).ready(function() {
@@ -173,20 +191,20 @@ if (!empty($confirmexamdate)) {
                 exportOptions: {
                     columns: [ 0, 1, 2, 3,4,5,6,7,8,9 ],
                     orthogonal: "export",
-                    title: "'.$title.'",
+                    title: "' . $title . '",
                 }
-                
+
             },
             {
                 extend: "pdfHtml5",
                 exportOptions: {
                     columns: [  1, 2, 3,5,6,7],
                     orthogonal: "export",
-                    title: "'.$title.'",
+                    title: "' . $title . '",
                 }
             }
               ],
-             
+
           "columnDefs": [
             { "visible": false,"searchable": false, "targets": groupColumn ,render: function (data, type, row) {
                 return type === "export" ?
@@ -290,7 +308,7 @@ if (!empty($confirmexamdate)) {
         var url = $(this).attr("href");
         window.open(url, "_blank");
     } );
-    
+
     $("#examdatestable-semester-select").on("change", function () {
     $("#examdatestable-semester-form").submit();
 });
@@ -306,13 +324,13 @@ if (!empty($confirmexamdate)) {
 echo $OUTPUT->footer();
 
 
-//$("#examdatestable tbody").on( "click", "tr.group", function () {
-//    var currentOrder = table.order()[0];
-//    if ( currentOrder[0] === groupColumn && currentOrder[1] === "asc" ) {
-//        table.order( [ groupColumn, "desc" ] ).draw();
-//    }
-//    else {
-//        table.order( [ groupColumn, "asc" ] ).draw();
-//    }
-//} );
+// ("#examdatestable tbody").on( "click", "tr.group", function () {
+// var currentOrder = table.order()[0];
+// if ( currentOrder[0] === groupColumn && currentOrder[1] === "asc" ) {
+// table.order( [ groupColumn, "desc" ] ).draw();
+// }
+// else {
+// table.order( [ groupColumn, "asc" ] ).draw();
+// }
+// );
 
