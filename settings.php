@@ -59,10 +59,13 @@ if ($ADMIN->fulltree) {
         }
     }
 
-    $configs[] = new admin_setting_configmultiselect('block_eledia_adminexamdates/departments',
-            new lang_string('departments', 'block_eledia_adminexamdates'),
-            new lang_string('config_departments', 'block_eledia_adminexamdates'),
-            array(), $departmentchoices);
+if('' != $departmentchoices) {
+            // Move department setting here to avoid install loop (231204 treitmzt)
+            $configs[] = new admin_setting_configmultiselect('block_eledia_adminexamdates/departments',
+                    new lang_string('departments', 'block_eledia_adminexamdates'),
+                    new lang_string('config_departments', 'block_eledia_adminexamdates'),
+                    array(), $departmentchoices);
+}
 
     $configs[] = new admin_setting_configcheckbox('block_eledia_adminexamdates/reloaddepartments',
             new lang_string('reloaddepartments', 'block_eledia_adminexamdates'),
@@ -104,11 +107,13 @@ if ($ADMIN->fulltree) {
     $syscontext = context_system::instance();
     if ($cohorts = $DB->get_records('cohort', ['contextid' => $syscontext->id, 'visible' => 1], 'name')) {
         $cohorts = array_column($cohorts, 'name', 'id');
+
+        // Move examinercohorts setting here to avoid install loop (231204 treitmzt)
+        $configs[] = new admin_setting_configmultiselect('block_eledia_adminexamdates/examinercohorts',
+                new lang_string('setting_examinercohorts', 'block_eledia_adminexamdates'),
+                new lang_string('config_examinercohorts', 'block_eledia_adminexamdates'),
+                array(), $cohorts);
     }
-    $configs[] = new admin_setting_configmultiselect('block_eledia_adminexamdates/examinercohorts',
-            new lang_string('setting_examinercohorts', 'block_eledia_adminexamdates'),
-            new lang_string('config_examinercohorts', 'block_eledia_adminexamdates'),
-            array(), $cohorts);
 
     $configs[] = new admin_setting_configtext('block_eledia_adminexamdates/bordercolor1',
             get_string('setting_bordercolor_unconfirmed_dates',
@@ -140,8 +145,9 @@ if ($ADMIN->fulltree) {
     $configs[] = new admin_setting_configselect('block_eledia_adminexamdates/instanceofmodelediachecklist',
             get_string('setting_instanceofmodelediachecklist', 'block_eledia_adminexamdates'),
             get_string('config_instanceofmodelediachecklist', 'block_eledia_adminexamdates'),
-            '',
+            0,
             $options);
+
     //
     //$options = [];
     //$options[0] = get_string('choose');
@@ -167,3 +173,4 @@ if ($ADMIN->fulltree) {
         $settings->add($config);
     }
 }
+
