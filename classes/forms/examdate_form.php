@@ -118,11 +118,13 @@ class examdate_form extends \moodleform {
         for ($i = 1; $i < 5; $i++) {
             $years[] = date('Y', strtotime('+' . $i . ' year'));
         }
-        $options[0] = get_string('pleasechoose', 'block_eledia_adminexamdates');
+
+        $termlist = [];
+        $termlist[0] = get_string('pleasechoose', 'block_eledia_adminexamdates');
         foreach ($years as $key => $year) {
-            $options[$year . '1'] = get_string('summersemester', 'block_eledia_adminexamdates') . ' ' . $year;
+            $termlist[$year . '1'] = get_string('summersemester', 'block_eledia_adminexamdates') . ' ' . $year;
             if (array_key_exists($key + 1, $years)) {
-                $options[$year . '2'] =
+                $termlist[$year . '2'] =
                         get_string('wintersemester', 'block_eledia_adminexamdates') . ' ' . $year . '/' . $years[$key + 1];
             }
         }
@@ -137,7 +139,7 @@ class examdate_form extends \moodleform {
         }
         if ($hasconfirmexamdatescap) {
             $mform->addElement('select', 'semester',
-                    get_string('select_semester', 'block_eledia_adminexamdates'), $options);
+                    get_string('select_semester', 'block_eledia_adminexamdates'), $termlist);
             $mform->addRule('semester', null, 'required');
         } else {
             $mform->addElement('hidden', 'semester');
@@ -145,18 +147,18 @@ class examdate_form extends \moodleform {
         $mform->setType('semester', PARAM_INT);
         $mform->setDefault('semester', $defaultsemester);
 
-        $options = [];
-        $options[0] = get_string('pleasechoose', 'block_eledia_adminexamdates');
+        $departmentlist = [];
+        $departmentlist[0] = get_string('pleasechoose', 'block_eledia_adminexamdates');
         $departmentchoices = unserialize(get_config('block_eledia_adminexamdates', 'departmentchoices'));
         $departments = explode(',', get_config('block_eledia_adminexamdates', 'departments'));
         foreach ($departments as $department) {
             if (isset($departmentchoices[$department])) {
-                $options[$department] = $departmentchoices[$department];
+                $departmentlist[$department] = $departmentchoices[$department];
             }
         }
 
         $mform->addElement('select', 'department',
-                get_string('department', 'block_eledia_adminexamdates'), $options);
+                get_string('department', 'block_eledia_adminexamdates'), $departmentlist);
         $mform->addRule('department', null, 'required', null, 'client');
         $mform->addRule('department', get_string('error_choose', 'block_eledia_adminexamdates'), 'nonzero', null, 'client');
 
@@ -241,17 +243,17 @@ class examdate_form extends \moodleform {
             $responsiblepersons = explode(',',
                     preg_replace('/^\h*\v+/m', '',
                             get_config('block_eledia_adminexamdates', 'responsiblepersons')));
-            $options = [0 => ''];
+            $personlist = [0 => ''];
 
             foreach ($responsiblepersons as $responsibleperson) {
                 if ($user = \core_user::get_user($responsibleperson)) {
-                    $options[$user->id] = fullname($user) . ' | ' . $user->email;;
+                    $personlist[$user->id] = fullname($user) . ' | ' . $user->email;;
                 }
             }
 
             $mform->addElement('autocomplete', 'responsibleperson',
                     get_string('responsibleperson', 'block_eledia_adminexamdates'),
-                    $options);
+                    $personlist);
             $mform->setType('responsibleperson', PARAM_RAW_TRIMMED);
             //$mform->addRule('responsibleperson', get_string('required'), 'required', null, 'client');
             //$mform->addRule('responsibleperson', get_string('required'), 'nonzero', null, 'client');
