@@ -547,6 +547,10 @@ class util {
         global $DB;
 
         $bookings = self::hasfreetimeslots2($formdata, true);
+        if(!is_array($bookings)) {
+            var_dump($bookings);
+            return;
+        }
         foreach ($bookings as $blocktimestart => $bookingrooms) {
             $blockid = $DB->insert_record('eledia_adminexamdates_blocks',
                     (object) ['examdateid' => $examdateid, 'blocktimestart' => $blocktimestart,
@@ -1679,7 +1683,7 @@ class util {
             ELSE 1 END AS checked
         FROM {eledia_adminexamdates_itm} item
         LEFT JOIN {eledia_adminexamdates_chk} ch ON item.id = ch.item AND ch.teacherid = {$examdateid}
-        WHERE  item.id IN ($items)
+        ".(!empty($items) ? "WHERE item.id IN (".$items.")" : "")."
         ORDER BY item.id";
         $examtimestart =
                 floor($DB->get_record('eledia_adminexamdates', ['id' => $examdateid], 'examtimestart', MUST_EXIST)->examtimestart);
