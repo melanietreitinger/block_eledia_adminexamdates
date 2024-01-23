@@ -35,14 +35,14 @@ $string['examdatesunconfirmed'] = 'Prüfungsterminplanung';
 $string['examdate_header'] = 'Prüfungsterminplanung';
 $string['examroom'] = 'Prüfungsraum';
 $string['select_examroom'] = 'Prüfungsraum wählen';
-$string['examtimestart'] = 'Prüfungszeitraum {$a} Uhr';
+$string['examtimestart'] = 'Start der Prüfung<br />Allg. Prüfungszeitraum: {$a} Uhr';
 $string['examduration'] = 'Prüfungszeit (Minuten)';
 $string['booktimestart'] = 'Buchungsbeginn';
 $string['bookduration'] = 'Buchungsdauer (Minuten)';
 $string['select_specialroom'] = 'Sonderraum wählen';
 $string['examname'] = 'Prüfungsbezeichnung';
 $string['examname_help'] =
-        'Bitte halten Sie sich bei der Bezeichnung der Prüfung an folgende Nomenklatur: „JJJJMMTT Fachbereich Prüfer:in/Dozent:in Freier Text“. Beispiel: „20230731 FB08 Mustermann Physiologie Grundlagen“.';
+        'Bitte halten Sie sich bei der Bezeichnung der Prüfung an folgende Nomenklatur: „JJJJMMTT Fachbereich Prüfer*in/Dozent*in Freier Text“. Beispiel: „20230731 FB08 Mustermann Physiologie Grundlagen“.';
 $string['examdaterequester'] = 'Beantragung';
 $string['timecreated'] = 'Erstellt';
 $string['confirmed'] = 'Bestätigt';
@@ -54,12 +54,12 @@ $string['cancelexamdatemsg'] = 'Wollen Sie die den Prüfungstermin stornieren f�
 $string['configure_description'] = 'Hier können Sie die Prüfungstermin-Verwaltung konfigurieren.';
 $string['number_students'] = 'Erwartete Anzahl der Teilnehmenden';
 $string['department'] = 'Fachbereich';
-$string['examiner'] = 'Dozent:in/ Prüfer:in';
+$string['examiner'] = 'Dozent*in/ Prüfer*in';
 $string['examiner_help'] =
-        'Wählen Sie eine oder mehrere Dozent:innen aus der Liste aus. Die Eingabe von Dozent:innennamen, die nicht in der Liste aufgeführt sind, werden nicht übernommen.';
-$string['contactperson'] = 'Ansprechpartner:in';
+        'Wählen Sie eine oder mehrere Dozent*innen aus der Liste aus. Die Eingabe von Dozent*innennamen, die nicht in der Liste aufgeführt sind, werden nicht übernommen.';
+$string['contactperson'] = 'Ansprechpartner*in';
 $string['contactpersonemail'] = 'E-Mail des/der Ansprechpartners/Ansprechpartnerin';
-$string['responsibleperson'] = 'Verantwortliche:r im E-Assessment-Center';
+$string['responsibleperson'] = 'Verantwortliche*r im E-Assessment-Center';
 $string['examrooms_default'] = 'PR1|Prüfungsraum 1|100|#E91E63
 PR2|Prüfungsraum 2|100|#3F51B5
 AB|Administrationsbüro|0|#009688
@@ -106,11 +106,11 @@ $string['examdateslist_btn'] = 'Prüfungstermin-Liste';
 $string['tablehead_month'] = 'Monat';
 $string['tablehead_date'] = 'Datum';
 $string['tablehead_examname'] = 'Bezeichnung Prüfung';
-$string['tablehead_examiner'] = 'Prüfer:in/Dozent:in';
-$string['tablehead_contactperson'] = 'Ansprechpartner:in';
+$string['tablehead_examiner'] = 'Prüfer*in/Dozent*in';
+$string['tablehead_contactperson'] = 'Ansprechpartner*in';
 $string['tablehead_examroom'] = 'Prüfungsraum';
-$string['tablehead_supervisor1'] = 'Betreuer:in 1';
-$string['tablehead_supervisor2'] = 'Betreuer:in 2';
+$string['tablehead_supervisor1'] = 'Betreuer*in 1';
+$string['tablehead_supervisor2'] = 'Betreuer*in 2';
 $string['tablehead_candidates'] = 'Prüflinge';
 $string['tablehead_status'] = 'Status';
 $string['tablehead_blockid'] = 'Teiltermin ID';
@@ -136,7 +136,7 @@ $string['dt_sortdescending'] = ': aktivieren um die Spalte absteigend zu sortier
 $string['block_timestart'] = 'Prüfungsbeginn (Blocktermin)';
 $string['block_duration'] = 'Prüfungs-Schreibzeit (Minuten)';
 $string['room_number_students'] = 'Anzahl der Teilnehmenden (Raum)';
-$string['room_supervisor'] = 'Betreuer:in (Raum)';
+$string['room_supervisor'] = 'Betreuer*in (Raum)';
 $string['room_supervision'] = 'Prüfungsaufsicht (Raum)';
 $string['partialdate'] = 'Teiltermin';
 $string['examdateedit'] = 'Prüfungstermin bearbeiten';

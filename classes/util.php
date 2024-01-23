@@ -548,7 +548,6 @@ class util {
 
         $bookings = self::hasfreetimeslots2($formdata, true);
         if(!is_array($bookings)) {
-            var_dump($bookings);
             return;
         }
         foreach ($bookings as $blocktimestart => $bookingrooms) {
