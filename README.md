@@ -22,6 +22,9 @@ The configuration for `mod_elediachecklist` can be found on the **setting page o
 section=modsettingelediachecklist).
 
 ### 1. Set up webservice (examination system)
+
+**You can use the provided cli script to automatically perform the following steps!**
+
 The following steps are based on the Moodle guide to create a webservice on `Site Administration -> Server -> Web services ->
 Overview`
 with some additional notes. Clicking the linked steps in moodle (in a new tab) will bring you directly to the respective setting pages.
